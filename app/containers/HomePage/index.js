@@ -10,15 +10,19 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+			<div style={{ padding: '20px' }}>
+				<h1>
+					<FormattedMessage {...messages.header} />
+				</h1>
+				<Link to="user">Manage Users</Link>
+			</div>
     );
   }
 }
