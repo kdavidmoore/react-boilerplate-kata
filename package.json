@@ -1,10 +1,10 @@
 {
-  "name": "react-boilerplate-kata",
+  "name": "react-redux-kata",
   "version": "0.1.0",
-  "description": "Messing around with mxstbr/react-boilerplate",
+  "description": "modified from mxstbr/react-boilerplate",
   "repository": {
     "type": "git",
-    "url": "git://github.com/kdavidmoore/react-boilerplate-kata.git"
+    "url": "git://github.com/kdavidmoore/react-redux-kata.git"
   },
   "engines": {
     "npm": ">=3"
