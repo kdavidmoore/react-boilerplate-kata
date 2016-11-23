@@ -12,8 +12,14 @@ const selectModal = () => createSelector(
 	(userState) => userState.get('open')
 );
 
+const selectUsers = () => createSelector(
+  selectUser(),
+  (userState) => userState.get('users')
+);
+
 export {
 	selectUser,
 	selectName,
 	selectModal,
+  selectUsers,
 };

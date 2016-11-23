@@ -1,9 +1,12 @@
 import { fromJS } from 'immutable';
+
 import {
   CHANGE_NAME,
 	OPEN_MODAL,
 	CLOSE_MODAL,
+  ADD_USER,
 } from './constants';
+
 import {
   DEFAULT_NAME,
 } from '../App/constants'; // eslint-disable-line
@@ -11,6 +14,7 @@ import {
 const initialState = fromJS({
   userName: DEFAULT_NAME,
 	open: false,
+  users: [],
 });
 
 function userReducer(state = initialState, action) {
@@ -24,7 +28,11 @@ function userReducer(state = initialState, action) {
 		case CLOSE_MODAL:
 			return state
 				.set('open', action.open);
-		default:
+    case ADD_USER:
+      console.log('should be adding a new user...');
+      return state
+        .update('users', users => users.push(action.userName));
+    default:
       return state;
   }
 }

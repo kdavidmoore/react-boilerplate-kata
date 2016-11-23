@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { selectName, selectModal } from './selectors';
+import { selectName, selectModal, selectUsers } from './selectors';
 import * as actionCreators from './actions';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -16,6 +16,11 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 	handleChange = (e) => {
 		this.props.changeName(e.target.value);
 	}
+
+  handleSubmit = (e) => {
+    this.props.addUser(e);
+    this.props.closeModal();
+  }
 
 	renderWords = (name) => {
 		let label;
@@ -42,6 +47,20 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 		}
 	}
 
+  renderUsers = (users) => {
+    if (users && users.length > 0) {
+      return users.map((user, index) => {
+        if (user) {
+          return <ListItem
+  					key={index}
+  					primaryText={user}
+  					secondaryText={index}
+  				/>
+        }
+      });
+		}
+	}
+
 	handleOpen = () => {
 		this.props.openModal();
 	}
@@ -51,7 +70,7 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 	}
 
 	render() {
-		const { userName, open } = this.props;
+		const { userName, open, users } = this.props;
     const modalActions = [
       <FlatButton
         label="Cancel"
@@ -61,51 +80,53 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
       <FlatButton
         label="Submit"
         primary={true}
-        disabled={true}
-        onClick={this.handleClose}
+        onClick={() => this.handleSubmit(userName)}
       />,
     ];
 
     return (
 			<div style={{ padding: '20px' }}>
-				<form onSubmit={this.handleSubmit}>
-					<h1>
-						<FormattedMessage {...messages.header} />
-					</h1>
-					<TextField
-						id="change-user-name"
-						defaultValue={userName}
-						onChange={this.handleChange}
-					/><br />
-					<List>
-						{this.renderWords(userName)}
-					</List>
-					<RaisedButton label="Submit" onClick={this.handleOpen} />
-					<Dialog
-						title="Confirm Submission"
-            actions={modalActions}
-						modal={true}
-						open={open}
-					>
-						Please confirm your submission:<br />
-						{userName}
-					</Dialog>
-				</form>
+				<h1>
+					<FormattedMessage {...messages.header} />
+				</h1>
+				<TextField
+					id="change-user-name"
+					defaultValue={userName}
+					onChange={this.handleChange}
+				/><br />
+				<List>
+					{this.renderWords(userName)}
+				</List>
+				<RaisedButton label="Submit" onClick={this.handleOpen} />
+				<Dialog
+					title="Confirm Submission"
+          actions={modalActions}
+					modal={true}
+					open={open}
+				>
+					Please confirm your submission:<br />
+					{userName}
+				</Dialog>
+        <List>
+          {this.renderUsers(users)}
+        </List>
 			</div>
     );
   }
 }
 
 User.propTypes = {
+  messages: React.PropTypes.object,
 	userName: React.PropTypes.string,
-	messages: React.PropTypes.object,
 	open: React.PropTypes.bool,
+  users: React.PropTypes.array,
 };
 
 const mapStateToProps = createSelector(
   selectName(),
 	selectModal(),
-  (userName, open) => ({ userName, open })
+  selectUsers(),
+  (userName, open, users) => ({ userName, open, users })
 );
 
 export default connect(mapStateToProps, actionCreators)(User);

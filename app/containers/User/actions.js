@@ -2,6 +2,7 @@ import {
 	CHANGE_NAME,
 	OPEN_MODAL,
 	CLOSE_MODAL,
+  ADD_USER,
 } from './constants';
 
 export function changeName(userName) {
@@ -23,4 +24,11 @@ export function closeModal() {
 		type: CLOSE_MODAL,
 		open: false,
 	};
+}
+
+export function addUser(userName) {
+  return {
+    type: ADD_USER,
+    userName: userName
+  };
 }
