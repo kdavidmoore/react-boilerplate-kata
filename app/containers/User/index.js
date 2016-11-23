@@ -2,32 +2,32 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { selectName, selectModal } from './selectors';
-import * as actions from './actions';
+import * as actionCreators from './actions';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import { List, ListItem } from 'material-ui/List';
 import TextField from 'material-ui/TextField';
-
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 export class User extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 	handleChange = (e) => {
 		this.props.changeName(e.target.value);
 	}
 
-	renderLetters = (name) => {
+	renderWords = (name) => {
 		let label;
 		if (name && name.length > 0) {
-			const letters = name.split(' ');
-			return letters.map((letter, index) => {
+			const words = name.split(' ');
+			return words.map((word, index) => {
 				switch (index) {
 					case 0:
-						label = 'First Name: ';
+						label = 'First Name:';
 						break;
-					case (letters.length-1):
-						label = 'Last Name: ';
+					case (words.length - 1):
+						label = 'Last Name:';
 						break;
 					default:
 						label = 'Middle Name:';
@@ -36,22 +36,36 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 				return <ListItem
 					key={index}
 					primaryText={label}
-					secondaryText={letter}
+					secondaryText={word}
 				/>
 			});
 		}
 	}
 
 	handleOpen = () => {
-		this.openModal();
+		this.props.openModal();
 	}
 
-	handleClost = () => {
-		this.closeModal();
+	handleClose = () => {
+		this.props.closeModal();
 	}
 
 	render() {
 		const { userName, open } = this.props;
+    const modalActions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        disabled={true}
+        onClick={this.handleClose}
+      />,
+    ];
+
     return (
 			<div style={{ padding: '20px' }}>
 				<form onSubmit={this.handleSubmit}>
@@ -64,16 +78,16 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 						onChange={this.handleChange}
 					/><br />
 					<List>
-						{this.renderLetters(userName)}
+						{this.renderWords(userName)}
 					</List>
 					<RaisedButton label="Submit" onClick={this.handleOpen} />
 					<Dialog
 						title="Confirm Submission"
-						modal={false}
+            actions={modalActions}
+						modal={true}
 						open={open}
-						onRequestClose={this.handleClose}
 					>
-						Please confirm your submission:
+						Please confirm your submission:<br />
 						{userName}
 					</Dialog>
 				</form>
@@ -94,4 +108,4 @@ const mapStateToProps = createSelector(
   (userName, open) => ({ userName, open })
 );
 
-export default connect(mapStateToProps, actions)(User);
+export default connect(mapStateToProps, actionCreators)(User);

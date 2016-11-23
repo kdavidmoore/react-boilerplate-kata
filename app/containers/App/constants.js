@@ -10,4 +10,4 @@
  */
 
 export const DEFAULT_LOCALE = 'en';
-export const DEFAULT_NAME = 'Keith Moore';
+export const DEFAULT_NAME = 'Your Name Here';
