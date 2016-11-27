@@ -12,8 +12,14 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
+import UsersTable from './UsersTable';
+
+const container = {
+  padding: '20px'
+};
+
 export class User extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-	handleChange = (e) => {
+	handleNameChange = (e) => {
 		this.props.changeName(e.target.value);
 	}
 
@@ -22,45 +28,6 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
     this.props.closeModal();
   }
 
-	renderWords = (name) => {
-		let label;
-		if (name && name.length > 0) {
-			const words = name.split(' ');
-			return words.map((word, index) => {
-				switch (index) {
-					case 0:
-						label = 'First Name:';
-						break;
-					case (words.length - 1):
-						label = 'Last Name:';
-						break;
-					default:
-						label = 'Middle Name:';
-				}
-
-				return <ListItem
-					key={index}
-					primaryText={label}
-					secondaryText={word}
-				/>
-			});
-		}
-	}
-
-  renderUsers = (users) => {
-    if (users && users.length > 0) {
-      return users.map((user, index) => {
-        if (user) {
-          return <ListItem
-  					key={index}
-  					primaryText={user}
-  					secondaryText={index}
-  				/>
-        }
-      });
-		}
-	}
-
 	handleOpen = () => {
 		this.props.openModal();
 	}
@@ -68,6 +35,12 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 	handleClose = () => {
 		this.props.closeModal();
 	}
+
+  renderUsersTable = (users) => {
+    if (users && users.length > 0) {
+      return <UsersTable data={users} />
+    }
+  }
 
 	render() {
 		const { userName, open, users } = this.props;
@@ -85,19 +58,19 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
     ];
 
     return (
-			<div style={{ padding: '20px' }}>
+			<div style={container}>
 				<h1>
 					<FormattedMessage {...messages.header} />
 				</h1>
+
 				<TextField
 					id="change-user-name"
 					defaultValue={userName}
-					onChange={this.handleChange}
-				/><br />
-				<List>
-					{this.renderWords(userName)}
-				</List>
-				<RaisedButton label="Submit" onClick={this.handleOpen} />
+					onChange={this.handleNameChange}
+				/>&nbsp;&nbsp;
+
+        <RaisedButton label="Submit" onClick={this.handleOpen} />
+
 				<Dialog
 					title="Confirm Submission"
           actions={modalActions}
@@ -107,9 +80,9 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 					Please confirm your submission:<br />
 					{userName}
 				</Dialog>
-        <List>
-          {this.renderUsers(users)}
-        </List>
+
+        <h1>Manage Users</h1>
+        {this.renderUsersTable(users)}
 			</div>
     );
   }

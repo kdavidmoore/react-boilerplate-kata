@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { toJS } from 'immutable';
 
 const selectUser = () => (state) => state.get('user');
 
@@ -14,7 +15,7 @@ const selectModal = () => createSelector(
 
 const selectUsers = () => createSelector(
   selectUser(),
-  (userState) => userState.get('users')
+  (userState) => userState.get('users').toJS()
 );
 
 export {

@@ -29,9 +29,23 @@ function userReducer(state = initialState, action) {
 			return state
 				.set('open', action.open);
     case ADD_USER:
-      console.log('should be adding a new user...');
+      let id;
+      let lastUser = state.get('users').last();
+      
+      if (lastUser) {
+        id = lastUser.id + 1;
+      } else {
+        id = 0;
+      }
+      let newUser = {
+        id: id,
+        name: action.userName,
+        roles: ['admin']
+      };
+
+      console.log(newUser);
       return state
-        .update('users', users => users.push(action.userName));
+        .update('users', users => users.concat([newUser]));
     default:
       return state;
   }
