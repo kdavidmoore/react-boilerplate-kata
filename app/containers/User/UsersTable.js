@@ -4,6 +4,7 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 export default class UsersTable extends React.PureComponent {
   render() {
     const { data } = this.props;
+    console.log(data);
     return (
       <Table>
         <TableHeader>
@@ -15,10 +16,12 @@ export default class UsersTable extends React.PureComponent {
         </TableHeader>
         <TableBody>
           {data.map((user) =>
-            <TableRow>
+            <TableRow key={user.id}>
               <TableRowColumn>{user.id}</TableRowColumn>
               <TableRowColumn>{user.name}</TableRowColumn>
-              <TableRowColumn>{user.roles}</TableRowColumn>
+              <TableRowColumn>
+                {user.roles ? user.roles : ''}
+              </TableRowColumn>
             </TableRow>
           )}
         </TableBody>

@@ -2,6 +2,8 @@ import { fromJS } from 'immutable';
 
 import {
   CHANGE_NAME,
+  ADD_ROLE,
+  REMOVE_ROLE,
 	OPEN_MODAL,
 	CLOSE_MODAL,
   ADD_USER,
@@ -13,6 +15,7 @@ import {
 
 const initialState = fromJS({
   userName: DEFAULT_NAME,
+  roles: [],
 	open: false,
   users: [],
 });
@@ -22,7 +25,13 @@ function userReducer(state = initialState, action) {
     case CHANGE_NAME:
       return state
         .set('userName', action.userName);
-		case OPEN_MODAL:
+    case ADD_ROLE:
+      return state
+        .update('roles', roles => roles.concat([action.role]));
+    case REMOVE_ROLE:
+      return state
+        .update('roles', roles => roles.filter((role) => role !== action.role));
+    case OPEN_MODAL:
 			return state
 				.set('open', action.open);
 		case CLOSE_MODAL:
@@ -31,19 +40,19 @@ function userReducer(state = initialState, action) {
     case ADD_USER:
       let id;
       let lastUser = state.get('users').last();
-      
+
       if (lastUser) {
         id = lastUser.id + 1;
       } else {
         id = 0;
       }
+
       let newUser = {
         id: id,
         name: action.userName,
-        roles: ['admin']
+        roles: action.roles
       };
 
-      console.log(newUser);
       return state
         .update('users', users => users.concat([newUser]));
     default:

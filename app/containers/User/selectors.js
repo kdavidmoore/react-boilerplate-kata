@@ -8,6 +8,11 @@ const selectName = () => createSelector(
   (userState) => userState.get('userName')
 );
 
+const selectRoles = () => createSelector(
+  selectUser(),
+  (userState) => userState.get('roles').toJS()
+);
+
 const selectModal = () => createSelector(
 	selectUser(),
 	(userState) => userState.get('open')
@@ -21,6 +26,7 @@ const selectUsers = () => createSelector(
 export {
 	selectUser,
 	selectName,
+  selectRoles,
 	selectModal,
   selectUsers,
 };

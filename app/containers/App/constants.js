@@ -10,4 +10,4 @@
  */
 
 export const DEFAULT_LOCALE = 'en';
-export const DEFAULT_NAME = 'Your Name Here';
+export const DEFAULT_NAME = 'New User Name';

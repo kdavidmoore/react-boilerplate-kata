@@ -1,5 +1,7 @@
 import {
 	CHANGE_NAME,
+  ADD_ROLE,
+  REMOVE_ROLE,
 	OPEN_MODAL,
 	CLOSE_MODAL,
   ADD_USER,
@@ -10,6 +12,20 @@ export function changeName(userName) {
 		type: CHANGE_NAME,
 		userName: userName,
 	};
+}
+
+export function addRole(role) {
+	return {
+		type: ADD_ROLE,
+		role: role,
+	};
+}
+
+export function removeRole(role) {
+  return {
+    type: REMOVE_ROLE,
+    role: role,
+  };
 }
 
 export function openModal() {
@@ -26,9 +42,10 @@ export function closeModal() {
 	};
 }
 
-export function addUser(userName) {
+export function addUser(userName, roles) {
   return {
     type: ADD_USER,
-    userName: userName
+    userName: userName,
+    roles: roles,
   };
 }
