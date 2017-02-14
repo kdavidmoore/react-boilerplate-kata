@@ -38,23 +38,17 @@ function userReducer(state = initialState, action) {
 			return state
 				.set('open', action.open);
     case ADD_USER:
-      let id;
       let lastUser = state.get('users').last();
 
-      if (lastUser) {
-        id = lastUser.id + 1;
-      } else {
-        id = 0;
-      }
-
       let newUser = {
-        id: id,
+        id: lastUser ? lastUser.id + 1 : 0,
         name: action.userName,
         roles: action.roles
       };
 
       return state
         .update('users', users => users.concat([newUser]));
+        // .set('userName', '');
     default:
       return state;
   }

@@ -40,16 +40,17 @@ export class User extends React.PureComponent { // eslint-disable-line react/pre
 	}
 
   handleCheckboxChange = (e, isChecked) => {
-    if (isChecked === true) {
-      this.props.addRole('admin');
-    } else {
-      this.props.removeRole('admin');
-    }
+    isChecked ? (
+      this.props.addRole('admin')
+    ) : (
+      this.props.removeRole('admin')
+    );
   }
 
   handleSubmit = (userName, roles) => {
     this.props.addUser(userName, roles);
     this.props.closeModal();
+    // this.handleNameChange({ target: { value: '' }});
   }
 
 	handleOpen = () => {

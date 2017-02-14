@@ -5,6 +5,7 @@ import {
 	OPEN_MODAL,
 	CLOSE_MODAL,
   ADD_USER,
+  CLEAR_NAME,
 } from './constants';
 
 export function changeName(userName) {

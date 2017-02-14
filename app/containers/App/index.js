@@ -16,7 +16,9 @@ import React from 'react';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 // injectTapEventPlugin();
+// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
